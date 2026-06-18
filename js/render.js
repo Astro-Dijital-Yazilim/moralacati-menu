@@ -8,6 +8,54 @@
   const I = window.Illustrations;
   const D = window.MENU_DATA;
 
+  /* ---------- başlıkların İngilizce karşılıkları ---------- */
+  const EN = {
+    // bölüm ayraçları
+    "Yemek": "Food",
+    "İçecek": "Drinks",
+    "Nargile": "Hookah",
+    // yemek kategorileri
+    "Başlangıçlar": "Starters",
+    "Hamburgerler & Wrapler & Taco": "Burgers, Wraps & Tacos",
+    "Makarnalar": "Pasta",
+    "Pizzalar": "Pizzas",
+    "Salatalar": "Salads",
+    "Ana Yemekler": "Main Courses",
+    "Tatlılar & Meyveler": "Desserts & Fruits",
+    // içecek kategorileri
+    "Soft İçecekler": "Soft Drinks",
+    "Kahveler & Sıcak İçecekler": "Coffees & Hot Drinks",
+    "Frozen & Milkshake": "Frozen & Milkshake",
+    "Şaraplar": "Wines",
+    "Şampanyalar": "Champagnes",
+    "Kadeh Alkoller": "Spirits by the Glass",
+    "Shot Alkoller": "Shots",
+    "Kokteyller": "Cocktails",
+    "Mor Special": "Signature Cocktails",
+    "Şişe Alkoller": "Bottle Spirits",
+    "Biralar": "Beers",
+  };
+  const enFor = (t) => EN[t] || "";
+
+  /* ---------- alt başlıkların (subheading) İngilizce karşılıkları ---------- */
+  const SUB_EN = {
+    "Et": "Meat",
+    "Tavuk": "Chicken",
+    "Hamburgerler": "Burgers",
+    "Wrapler": "Wraps",
+    "Taco": "Tacos",
+    "Sıcak Kahveler": "Hot Coffees",
+    "Soğuk Kahveler": "Iced Coffees",
+    "Sıcak İçecekler": "Hot Drinks",
+    "Frozen": "Frozen",
+    "Milkshake": "Milkshake",
+    "Kırmızı": "Red",
+    "Beyaz": "White",
+    "Blush": "Blush",
+    "Aperatifler": "Aperitifs",
+  };
+  const subEnFor = (t) => SUB_EN[t] || "";
+
   /* ---------- küçük yardımcılar ---------- */
   function el(html) {
     const t = document.createElement("template");
@@ -176,9 +224,12 @@
      sol kılavuza hizalı ürün listesi, sağda kasıtlı boşluk.
      ============================================================ */
   function EditorialItem(item) {
-    // Alt başlık (ör. "Soğuk Başlangıçlar", "Et") — normal ürün değil
+    // Alt başlık (ör. "Et", "Hamburgerler") — normal ürün değil
     if (item.subheading) {
-      return `<div class="ed-subhead">${item.subheading}</div>`;
+      const en = subEnFor(item.subheading)
+        ? ` <span class="ed-subhead__en" lang="en">(${subEnFor(item.subheading)})</span>`
+        : "";
+      return `<div class="ed-subhead">${item.subheading}${en}</div>`;
     }
     const price = item.price
       ? `<span class="ed-item__price">${item.price}</span>`
@@ -201,9 +252,13 @@
 
   /* ---------- Separator (bölüm geçiş) sayfası — tamamen mor ---------- */
   function MenuSeparatorPage(title) {
+    const en = enFor(title)
+      ? `<p class="sep__en" lang="en">${enFor(title)}</p>`
+      : "";
     return el(`
       <section class="page page--deep sep">
         <h2 class="sep__title">${title}</h2>
+        ${en}
       </section>`);
   }
 
@@ -220,7 +275,11 @@
         <img class="ed-watermark" src="${logoSrc}" alt="" aria-hidden="true" />
         <img class="ed-logo" src="${logoSrc}" alt="${D.brand.name}" />
         <div class="ed-row">
-          <div class="ed-side"><h2 class="ed-title">${category.title}</h2></div>
+          <div class="ed-side"><h2 class="ed-title">${category.title}${
+            enFor(category.title)
+              ? `<span class="ed-title__en" lang="en">${enFor(category.title)}</span>`
+              : ""
+          }</h2></div>
           <div class="ed-list">${items}</div>
         </div>
         ${note}
@@ -252,8 +311,8 @@
       MenuEditorialPage(cat("Makarnalar")),
       MenuEditorialPage(cat("Pizzalar")),
       MenuEditorialPage(cat("Salatalar")),
-      MenuEditorialPage(cat("Tatlılar & Meyveler")),
       MenuEditorialPage(cat("Ana Yemekler")),
+      MenuEditorialPage(cat("Tatlılar & Meyveler")),
 
       /* ---------------- İÇECEK ---------------- */
       MenuSeparatorPage("İçecek"),
@@ -268,6 +327,10 @@
       MenuEditorialPage(cat("Mor Special")),
       MenuEditorialPage(cat("Şişe Alkoller")),
       MenuEditorialPage(cat("Biralar")),
+
+      /* ---------------- NARGİLE ---------------- */
+      MenuSeparatorPage("Nargile"),
+      MenuEditorialPage(cat("Nargile")),
 
       /* ---------------- KAPANIŞ ---------------- */
       MenuOutroPage(),
