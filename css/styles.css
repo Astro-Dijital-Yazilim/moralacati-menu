@@ -1,0 +1,818 @@
+/* ============================================================
+   MOR ALAÇATI — Restaurant & Bar Menü
+   Tasarım sistemi / Design system
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Playfair+Display:wght@500;600;700&display=swap');
+
+/* ---------- 1. Renk paleti ---------- */
+:root {
+  --mor-deep:     #211328;
+  --mor-main:     #2B1738;
+  --mor-soft:     #6B4A82;
+  --mor-light:    #A996B8;
+  --lavender-bg:  #EEE8F3;
+  --warm-white:   #FAF7F2;
+  --paper-white:  #FBF8F3;
+  --text-dark:    #2A2230;
+  --text-muted:   #5F5665;
+  --white:        #FFFFFF;
+  --cream-muted:  #E8DFEC;
+
+  /* Tipografi */
+  --font-sans: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  --font-serif: "EB Garamond", "Garamond", "Times New Roman", serif;
+
+  /* A4 ölçüleri */
+  --page-w: 210mm;
+  --page-h: 297mm;
+  --page-pad: 18mm;
+}
+
+/* ---------- 2. Reset ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: #9c93a8;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- 3. Sayfa sistemi (A4 dikey) ---------- */
+/* Ekranda sayfaları ikişerli yan yana göster */
+#menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 12mm;
+  padding: 60px 12mm 24mm;   /* üstte sabit araç çubuğu için boşluk */
+}
+#menu .page { margin: 0; }
+
+/* Ekran önizleme — sütun sayısına göre sayfaları küçült (zoom) */
+body.view-1up #menu .page { zoom: 1; }
+body.view-2up #menu .page { zoom: 0.6; }
+body.view-3up #menu .page { zoom: 0.42; }
+
+.page {
+  position: relative;
+  width: var(--page-w);
+  height: var(--page-h);
+  margin: 12mm auto;
+  padding: var(--page-pad);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(33, 19, 40, 0.35);
+}
+
+/* Açık zemin teması */
+.page--light {
+  background: var(--white);
+  color: var(--text-dark);
+}
+/* Beyaz sayfalarda düşük opaklıklı Alaçatı arka plan görseli */
+.page--light::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../background-image.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.16;
+  z-index: 0;
+  pointer-events: none;
+}
+/* Çok açık lavanta varyasyonu */
+.page--lavender {
+  background: linear-gradient(180deg, var(--lavender-bg) 0%, var(--paper-white) 60%);
+  color: var(--text-dark);
+}
+/* Koyu mor zemin teması */
+.page--dark {
+  background: var(--mor-main);
+  color: var(--white);
+}
+.page--deep {
+  background:
+    radial-gradient(120% 80% at 50% 0%, #32204050 0%, transparent 60%),
+    var(--mor-deep);
+  color: var(--white);
+}
+
+/* ---------- 4. Arka plan illüstrasyon katmanı ---------- */
+.illustration-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.illustration-layer svg { display: block; }
+
+.illu {
+  position: absolute;
+}
+/* Açık sayfalarda çizimler açık mor + düşük opaklık */
+.page--light  .illu,
+.page--lavender .illu { color: var(--mor-light); }
+/* Mor sayfalarda çizimler koyu mor üstüne açık mor, daha düşük opaklık */
+.page--dark   .illu,
+.page--deep   .illu { color: var(--mor-soft); }
+
+/* Sayfa içeriği çizimlerin üstünde */
+.page > .content,
+.page > .page-header,
+.page > .page-footer { position: relative; z-index: 1; }
+
+/* ============================================================
+   5. LOGO — Mor Alaçatı monogram lockup
+   ============================================================ */
+.monogram {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  line-height: 1;
+}
+.monogram__mark { display: block; }
+.monogram__word {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+/* renkler tema ile */
+.page--light  .monogram, .page--lavender .monogram { color: var(--mor-main); }
+.page--dark   .monogram, .page--deep    .monogram { color: var(--white); }
+
+/* ============================================================
+   6. ORTAK YERLEŞİM
+   ============================================================ */
+.page-header {
+  display: flex;
+  justify-content: center;
+  padding-top: 4mm;
+}
+.content { flex: 1 1 auto; }
+.page-footer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/* ============================================================
+   7. KAPAK
+   ============================================================ */
+.cover {
+  align-items: center;
+  text-align: center;
+  color: var(--white);
+  /* gerçekçi floral arka plan (sol-alttan çıkan çiçek & yaprak) */
+  background-color: var(--mor-deep);
+  background-image: url("../assets/cover-floral.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.cover__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1 1 auto;
+  padding-top: 34mm;
+}
+
+/* Gerçek MOR ALAÇATI logosu (beyaz, şeffaf zemin) */
+.cover__logo-img {
+  width: 88mm;
+  height: auto;
+  margin-bottom: 16mm;
+}
+
+.cover__title {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.62em;
+  text-indent: 0.62em;
+  font-size: 44px;
+  color: var(--white);
+}
+.cover__subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  color: var(--cream-muted);
+  margin-top: 9mm;
+}
+
+/* ============================================================
+   8. İÇ KAPAK
+   ============================================================ */
+/* Giriş sayfası — kapak-gorseli.png tam sayfa arka plan, yazılar üstte */
+.intro--image {
+  background-color: var(--mor-deep);
+  background-image: url("../kapak-gorseli.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--white);
+  justify-content: flex-end;   /* yazıları alt boş alana hizala */
+}
+.intro--image .intro__overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;   /* yazıları görselin alt boş alanına it */
+  text-align: center;
+  padding-bottom: 22mm;
+}
+.intro--image .intro__heading { color: var(--white); }
+.intro--image .intro__verse   { color: var(--cream-muted); }
+.intro--image .intro__body    { color: var(--cream-muted); }
+.intro--image .intro__dot     { background: var(--mor-light); }
+
+/* Sade iç kapak (yalnızca logo + MENU) — içerik dikey ortalı */
+.intro--title { justify-content: center; }
+.intro__overlay--title {
+  justify-content: center;
+  padding-bottom: 0;
+  gap: 14mm;
+}
+.intro__overlay--title .monogram { color: var(--white); }
+.intro__overlay--title .monogram__word {
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  text-indent: 0.5em;
+}
+.intro__menu-title {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.62em;
+  text-indent: 0.62em;
+  font-size: 44px;
+  color: var(--white);
+}
+
+/* İç kapak — kapak-gorsel.png arka plan (açık tonlu çizim, koyu metin) */
+.intro--photo {
+  background-color: var(--warm-white);
+  /* alt banda doğru beyaz geçiş — yazılar çizimin üstünü kapatmaz */
+  background-image:
+    linear-gradient(to top,
+      var(--warm-white) 0%,
+      rgba(250, 247, 242, 0.94) 24%,
+      rgba(250, 247, 242, 0) 46%),
+    url("../kapak-gorsel.png");
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+  color: var(--text-dark);
+  justify-content: flex-end;
+}
+.intro--photo .intro__overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+  padding-bottom: 6mm;
+}
+
+.intro__logo { margin-bottom: 6mm; }
+.intro__logo .monogram__mark { width: 86px; }
+.intro__scene {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2mm 0;
+}
+.intro__scene svg { width: 122mm; height: auto; color: var(--mor-soft); }
+.intro__heading {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 28px;
+  text-align: center;
+  color: var(--mor-main);
+  margin-top: 2mm;
+}
+.intro__verse {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13.5px;
+  line-height: 1.9;
+  text-align: center;
+  color: var(--mor-soft);
+  margin-top: 5mm;
+}
+.intro__body {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 11px;
+  line-height: 2;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: var(--text-muted);
+  max-width: 118mm;
+  margin: 7mm auto 0;
+}
+.intro__dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--mor-light);
+  margin: 7mm auto 0;
+}
+
+/* ============================================================
+   8.4  SEPARATOR (bölüm geçiş) SAYFASI — tamamen mor
+   ============================================================ */
+.sep {
+  background: var(--mor-deep);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.sep__title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 82px;
+  letter-spacing: 0.015em;
+  line-height: 1.05;
+  color: var(--white);
+  margin: 0;
+}
+
+/* ============================================================
+   8.5  EDITORIAL KATEGORİ SAYFASI (tasarım sistemi v2)
+   Sol hizalı, minimal & lüks
+   ============================================================ */
+.ed { justify-content: flex-start; }
+
+/* soft logo filigranı — kenardan taşan, çok düşük opaklık */
+.ed-watermark {
+  position: absolute;
+  z-index: 0;
+  width: 150mm;
+  height: auto;
+  right: -42mm;
+  bottom: -28mm;
+  pointer-events: none;
+}
+.page--light.ed .ed-watermark { display: none; }
+.page--deep.ed  .ed-watermark { opacity: 0.09; }
+
+/* küçük üst logo, sol hizalı */
+.ed-logo {
+  position: relative;
+  z-index: 1;
+  width: 44mm;
+  height: auto;
+  display: block;
+  margin-bottom: 9mm;
+}
+
+/* satır: solda dikey başlık, sağda liste */
+.ed-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1 1 auto;
+  gap: 11mm;
+}
+.ed-side {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+/* başlık — solda, dikey, yukarıdan aşağı okunur */
+.ed-title {
+  writing-mode: vertical-rl;
+  white-space: nowrap;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 50px;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+.page--light .ed-title { color: var(--mor-main); }
+.page--deep  .ed-title { color: var(--white); }
+
+/* liste — başlığın sağında */
+.ed-list {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10mm;
+}
+
+/* kompakt mod — yoğun içecek listeleri için sıkı aralık */
+.ed--compact .ed-list { gap: 5mm; justify-content: flex-start; }
+.ed--compact .ed-item__name { font-size: 16px; letter-spacing: 0.09em; }
+.ed--compact .ed-item__price { font-size: 15px; }
+.ed--compact .ed-item__desc { font-size: 11px; margin-top: 3px; }
+/* alt başlık (Soğuk / Sıcak, Et / Köfte / Tavuk) */
+.ed-subhead {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 21px;
+  letter-spacing: 0.02em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid currentColor;
+}
+.ed-subhead:not(:first-child) { margin-top: 4mm; }
+.page--light .ed-subhead { color: var(--mor-soft); }
+.page--deep  .ed-subhead { color: var(--mor-light); }
+.ed--compact .ed-subhead { font-size: 18px; margin-top: 2mm; }
+
+.ed-item__row { display: flex; align-items: baseline; gap: 11px; }
+.ed-item__name {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 19px;
+}
+.page--light .ed-item__name { color: var(--text-dark); }
+.page--deep  .ed-item__name { color: var(--white); }
+.ed-item__icon { width: 20px; height: 20px; flex: 0 0 auto; stroke-width: 1.5; }
+.page--light .ed-item__icon { color: var(--mor-soft); }
+.page--deep  .ed-item__icon { color: var(--mor-light); }
+
+/* çok soluk noktalı leader — separatorler mor */
+.ed-item__lead {
+  flex: 1 1 auto;
+  align-self: center;
+  height: 1px;
+  color: var(--mor-soft);
+  background-image: radial-gradient(currentColor 0.6px, transparent 0.7px);
+  background-size: 6px 2px;
+  background-repeat: repeat-x;
+  opacity: 0.45;
+}
+.ed-item__price {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.page--light .ed-item__price { color: var(--mor-main); }
+.page--deep  .ed-item__price { color: var(--mor-light); }
+
+/* açıklama — ad metnine hizalı (ikon değil) */
+.ed-item__desc {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  margin: 5px 0 0 0;
+  max-width: 108mm;
+}
+.page--light .ed-item__desc { color: var(--text-muted); }
+.page--deep  .ed-item__desc { color: var(--cream-muted); }
+
+/* footer etiketi */
+.ed-footer {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding-top: 10mm;
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+.page--light .ed-footer { color: var(--mor-soft); opacity: 0.7; }
+.page--deep  .ed-footer { color: var(--mor-light); opacity: 0.7; }
+
+/* ============================================================
+   9. KATEGORİ SAYFASI
+   ============================================================ */
+/* ---- Atmosferik arka plan: yumuşak ışık hüzmeleri (çizgi yok) ---- */
+.category .ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+/* yumuşak yuvarlak ışık lekeleri */
+.category .ambient::before,
+.category .ambient::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+}
+
+/* Koyu mor sayfa — derin moru aydınlatan sıcak hüzmeler */
+.page--deep.category .ambient {
+  background:
+    radial-gradient(120% 75% at 50% -15%, rgba(107, 74, 130, 0.55) 0%, transparent 55%),
+    radial-gradient(90% 60% at 110% 115%, rgba(169, 150, 184, 0.22) 0%, transparent 55%);
+}
+.page--deep.category .ambient::before {
+  width: 120mm; height: 120mm;
+  left: -40mm; top: 30mm;
+  background: radial-gradient(circle, rgba(107, 74, 130, 0.40) 0%, transparent 70%);
+}
+.page--deep.category .ambient::after {
+  width: 90mm; height: 90mm;
+  right: -30mm; bottom: 35mm;
+  background: radial-gradient(circle, rgba(169, 150, 184, 0.20) 0%, transparent 70%);
+}
+
+/* Açık sayfa — lavanta tonlu yumuşak yıkama */
+.page--light.category .ambient {
+  background:
+    radial-gradient(130% 80% at 100% 0%, rgba(169, 150, 184, 0.20) 0%, transparent 48%),
+    radial-gradient(120% 80% at 0% 100%, rgba(238, 232, 243, 0.70) 0%, transparent 52%);
+}
+.page--light.category .ambient::before {
+  width: 110mm; height: 110mm;
+  right: -35mm; top: -25mm;
+  background: radial-gradient(circle, rgba(169, 150, 184, 0.22) 0%, transparent 70%);
+}
+.page--light.category .ambient::after {
+  width: 95mm; height: 95mm;
+  left: -30mm; bottom: -20mm;
+  background: radial-gradient(circle, rgba(107, 74, 130, 0.10) 0%, transparent 70%);
+}
+
+/* Büyük soluk logo filigranı — arka planı markalı ve dolu gösterir */
+.category .watermark {
+  position: absolute;
+  z-index: 0;
+  width: 165mm;
+  height: auto;
+  left: 50%;
+  top: 54%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.page--light.category .watermark { opacity: 0.06; }
+.page--deep.category  .watermark { opacity: 0.10; }
+
+/* Üst marka logosu (gerçek MOR ALAÇATI) */
+.category__logo { margin-bottom: 10mm; }
+.category .brand-logo {
+  width: 56mm;
+  height: auto;
+  display: block;
+}
+
+/* ---- Yatay sol başlık + ayraç + sağ liste düzeni ---- */
+.category__body {
+  display: flex;
+  align-items: stretch;
+  gap: 9mm;
+  padding-top: 4mm;
+}
+.category__side {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2mm 1mm;
+}
+/* dikey başlık — aşağıdan yukarı okunur */
+.category__title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 52px;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+.page--light .category__title, .page--lavender .category__title { color: var(--mor-main); }
+.page--dark  .category__title, .page--deep    .category__title { color: var(--white); }
+
+/* ---- Ayraç (separator) sayfası ---- */
+.category--sep .category__sep-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10mm;
+}
+.category__sep-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 72px;
+  letter-spacing: 0.015em;
+  line-height: 1.05;
+  margin: 0;
+  max-width: 150mm;
+}
+.page--light .category__sep-title, .page--lavender .category__sep-title { color: var(--mor-main); }
+.page--dark  .category__sep-title, .page--deep    .category__sep-title { color: var(--white); }
+.category--sep .category__flourish svg { width: 56px; height: 18px; }
+
+/* ortadaki ince ayraç çizgisi */
+.category__rule {
+  flex: 0 0 auto;
+  width: 1px;
+  align-self: stretch;
+}
+.page--light .category__rule, .page--lavender .category__rule { background: var(--mor-soft); opacity: 0.45; }
+.page--dark  .category__rule, .page--deep    .category__rule { background: var(--mor-light); opacity: 0.40; }
+
+/* başlık altı zarif süs (çizgi değil, küçük rozet) */
+.category__flourish {
+  display: flex; justify-content: center; align-items: center;
+  margin-bottom: 13mm;
+}
+.category__flourish svg { width: 38px; height: 12px; }
+.page--light .category__flourish, .page--lavender .category__flourish { color: var(--mor-light); }
+.page--dark  .category__flourish, .page--deep    .category__flourish { color: var(--mor-soft); }
+
+/* Ürün listesi — sağ sütun */
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8mm;
+  flex: 1 1 auto;
+  margin: 0;
+}
+
+/* ---------- MenuItem ---------- */
+.menu-item__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+/* başlığa uygun Lucide ikonu */
+.menu-item__icon,
+.menu-item__row svg {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  stroke-width: 1.6;
+}
+.page--light .menu-item__icon, .page--lavender .menu-item__icon { color: var(--mor-soft); }
+.page--dark  .menu-item__icon, .page--deep    .menu-item__icon { color: var(--mor-light); }
+.menu-item__name {
+  font-family: var(--font-sans);
+  font-weight: 400;           /* menü detayı — light/okunur */
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 20px;
+}
+.menu-item__dots {
+  flex: 1 1 auto;
+  align-self: center;
+  margin: 0 2px;
+  height: 1px;
+  background-image: radial-gradient(currentColor 0.6px, transparent 0.7px);
+  background-size: 6px 2px;
+  background-repeat: repeat-x;
+  background-position: left center;
+  opacity: 0.35;
+}
+.menu-item__price {
+  font-family: var(--font-sans);
+  font-weight: 700;           /* fiyat — bold */
+  letter-spacing: 0.06em;
+  font-size: 19px;
+  white-space: nowrap;
+}
+.menu-item__desc {
+  font-family: var(--font-sans);
+  font-weight: 400;           /* açıklama — light/okunur */
+  font-size: 13px;
+  line-height: 1.6;
+  letter-spacing: 0.015em;
+  margin-top: 5px;
+  margin-left: 36px;          /* ikon hizasından metin başlasın */
+  max-width: 130mm;
+}
+
+.page--light .menu-item__name, .page--lavender .menu-item__name { color: var(--text-dark); }
+.page--light .menu-item__price, .page--lavender .menu-item__price { color: var(--mor-main); }
+.page--light .menu-item__desc, .page--lavender .menu-item__desc { color: var(--text-muted); }
+
+.page--dark .menu-item__name, .page--deep .menu-item__name { color: var(--white); }
+.page--dark .menu-item__price, .page--deep .menu-item__price { color: var(--mor-light); }
+.page--dark .menu-item__desc, .page--deep .menu-item__desc { color: var(--cream-muted); }
+
+/* Sayfa numarası / footer not */
+.page-note {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 8.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0.6;
+}
+.page--light .page-note, .page--lavender .page-note { color: var(--mor-soft); }
+.page--dark  .page-note, .page--deep    .page-note { color: var(--mor-light); }
+
+/* ============================================================
+   10. EKRAN ÖNİZLEME yardımcıları
+   ============================================================ */
+.screen-toolbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 999;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 10px 16px;
+  background: rgba(33,19,40,0.92);
+  color: #EEE8F3;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.screen-toolbar button {
+  font: inherit;
+  color: #211328;
+  background: #EEE8F3;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+}
+.screen-toolbar button:hover { background: #fff; }
+.screen-toolbar .spacer { flex: 1 1 auto; }
+.screen-toolbar small { opacity: 0.7; }
+.screen-toolbar .cols { display: inline-flex; align-items: center; gap: 6px; }
+.screen-toolbar .cols button { padding: 4px 10px; }
+body.printing .screen-toolbar { display: none; }
+
+/* Ekranda her sayfaya numara rozeti (baskıda gizli) */
+#menu { counter-reset: page; }
+#menu .page::after {
+  counter-increment: page;
+  content: counter(page);
+  position: absolute;
+  top: 0; left: 0;
+  z-index: 5;
+  background: rgba(33,19,40,0.9);
+  color: #EEE8F3;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-bottom-right-radius: 6px;
+}
+body.printing #menu .page::after { display: none; }
+
+/* ============================================================
+   11. BASKI / PDF
+   ============================================================ */
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+@media print {
+  html, body { background: #fff; }
+  .screen-toolbar { display: none !important; }
+  #menu .page { zoom: 1 !important; }
+  #menu .page::after { display: none !important; }
+  #menu { display: block; padding: 0; gap: 0; }
+  .page {
+    margin: 0;
+    box-shadow: none;
+    page-break-after: always;
+    break-after: page;
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+}
+
+/* Zemin renkleri baskıda korunsun */
+.page {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}

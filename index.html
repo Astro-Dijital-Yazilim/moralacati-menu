@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mor Alaçatı — Menü</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- Ekran önizleme araç çubuğu (baskıda gizlenir) -->
+  <div class="screen-toolbar">
+    <strong>Mor Alaçatı · Menü</strong>
+    <small>A4 dikey · çok sayfalı</small>
+    <span class="cols">
+      <small>Sütun:</small>
+      <button onclick="MorAlacatiMenu.setCols(1)">1</button>
+      <button onclick="MorAlacatiMenu.setCols(2)">2</button>
+      <button onclick="MorAlacatiMenu.setCols(3)">3</button>
+    </span>
+    <span class="spacer"></span>
+    <small>PDF için: Yazdır → Hedef “PDF olarak kaydet”, kenar boşluğu “Yok”, arka plan grafikleri açık</small>
+    <button onclick="MorAlacatiMenu.print()">PDF / Yazdır</button>
+  </div>
+
+  <!-- Menü sayfaları buraya render edilir -->
+  <main id="menu"></main>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="js/illustrations.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/render.js"></script>
+</body>
+</html>
