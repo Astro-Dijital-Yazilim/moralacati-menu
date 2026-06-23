@@ -105,20 +105,10 @@
      KAPAK
      ============================================================ */
   function MenuCover() {
-    const c = D.brand.cover;
-    // Arka plan: gerçekçi floral görsel (CSS .cover background-image)
-    // Logo: gerçek MOR ALAÇATI logosu (beyaz, şeffaf png)
+    // Kapak tek parça hazır görsel (logo + MENÜ + alt yazı + floral dahil).
+    // Türkçe aksanlar (Ü) görselde gömülü olduğu için font sorunu yaşanmaz.
     return el(`
-      <section class="page cover">
-        <div class="cover__inner content">
-          <img class="cover__logo-img" src="assets/mor-logo-white.png" alt="MOR ALAÇATI"
-               onerror="this.style.visibility='hidden'" />
-          <div>
-            <h1 class="cover__title">${c.title}</h1>
-            <p class="cover__subtitle">${c.subtitle}</p>
-          </div>
-        </div>
-      </section>`);
+      <section class="page cover cover--image"></section>`);
   }
 
   /* ============================================================
@@ -301,7 +291,7 @@
     const cat = (t) => D.categories.find((c) => c.title === t);
 
     const pages = [
-      MenuTitlePage(),
+      MenuCover(),
       MenuIntroPage(),
 
       /* ---------------- YEMEK ---------------- */

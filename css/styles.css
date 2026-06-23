@@ -180,6 +180,10 @@ body.view-3up #menu .page { zoom: 0.42; }
   background-position: center;
   background-repeat: no-repeat;
 }
+/* Tek parça hazır kapak görseli (logo + MENÜ + alt yazı gömülü) */
+.cover--image {
+  background-image: url("../assets/cover-image.png");
+}
 .cover__inner {
   display: flex;
   flex-direction: column;

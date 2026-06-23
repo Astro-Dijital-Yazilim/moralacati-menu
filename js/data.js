@@ -12,7 +12,7 @@ window.MENU_DATA = {
   brand: {
     name: "MOR ALAÇATI",
     cover: {
-      title: "MENU",
+      title: "MENÜ",
       subtitle: "Alaçatı’da zarif akşamlar",
     },
     intro: {
@@ -661,7 +661,7 @@ window.MENU_DATA = {
         {
           name: "İthal Bira Kovası",
           lang: "tr",
-          description: "Becks, Miller, Corona & Stella",
+          description: "Becks, Miller, Corona & Stella arasından seçeceğiniz 6 adet ithal bira",
           price: "₺3.300",
         },
       ],
