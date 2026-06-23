@@ -654,11 +654,13 @@ window.MENU_DATA = {
         { name: "Küba Birası", lang: "tr", price: "₺750" },
         {
           name: "Bira Kovası",
+          lang: "tr",
           description: "6 Adet Efes",
           price: "₺2.850",
         },
         {
           name: "İthal Bira Kovası",
+          lang: "tr",
           description: "Becks, Miller, Corona & Stella",
           price: "₺3.300",
         },
