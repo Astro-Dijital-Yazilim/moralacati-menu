@@ -275,11 +275,12 @@ body.view-3up #menu .page { zoom: 0.42; }
   background-image:
     linear-gradient(to top,
       var(--warm-white) 0%,
-      rgba(250, 247, 242, 0.94) 24%,
-      rgba(250, 247, 242, 0) 46%),
+      var(--warm-white) 32%,
+      rgba(250, 247, 242, 0.92) 48%,
+      rgba(250, 247, 242, 0) 64%),
     url("../kapak-gorsel.png");
   background-size: cover, cover;
-  background-position: center, center;
+  background-position: center, center 88%;
   background-repeat: no-repeat, no-repeat;
   color: var(--text-dark);
   justify-content: flex-end;
@@ -307,7 +308,7 @@ body.view-3up #menu .page { zoom: 0.42; }
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 500;
-  font-size: 28px;
+  font-size: 26px;
   text-align: center;
   color: var(--mor-main);
   margin-top: 2mm;
@@ -316,27 +317,49 @@ body.view-3up #menu .page { zoom: 0.42; }
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: 13.5px;
-  line-height: 1.9;
+  font-size: 13px;
+  line-height: 1.75;
   text-align: center;
   color: var(--mor-soft);
-  margin-top: 5mm;
+  margin-top: 4mm;
 }
 .intro__body {
   font-family: var(--font-sans);
   font-weight: 300;
-  font-size: 11px;
-  line-height: 2;
+  font-size: 10.5px;
+  line-height: 1.85;
   letter-spacing: 0.02em;
   text-align: center;
   color: var(--text-muted);
   max-width: 118mm;
-  margin: 7mm auto 0;
+  margin: 4.5mm auto 0;
 }
 .intro__dot {
   width: 4px; height: 4px; border-radius: 50%;
   background: var(--mor-light);
-  margin: 7mm auto 0;
+  margin: 4.5mm auto 0;
+}
+
+/* İngilizce karşılıklar — giriş & kapanış sayfası (Türkçenin altında, soluk) */
+.intro__heading-en {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
+  color: var(--mor-soft);
+  opacity: 0.7;
+  margin: 1mm 0 0;
+}
+.intro__verse-en {
+  font-size: 11.5px;
+  opacity: 0.6;
+  margin-top: 1.5mm;
+}
+.intro__body-en {
+  font-style: italic;
+  opacity: 0.72;
+  margin-top: 2mm;
 }
 
 /* ============================================================
@@ -480,8 +503,9 @@ body.view-3up #menu .page { zoom: 0.42; }
 .ed-item__row { display: flex; align-items: baseline; gap: 11px; }
 .ed-item__name {
   display: flex;
-  align-items: center;
-  gap: 11px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
   font-family: var(--font-sans);
   font-weight: 400;
   text-transform: uppercase;
@@ -490,6 +514,19 @@ body.view-3up #menu .page { zoom: 0.42; }
 }
 .page--light .ed-item__name { color: var(--text-dark); }
 .page--deep  .ed-item__name { color: var(--white); }
+
+/* İngilizce ürün adı — Türkçe adın altında, küçük italik serif & soluk */
+.ed-item__name-en {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 13px;
+  line-height: 1.2;
+  opacity: 0.62;
+}
+.ed--compact .ed-item__name-en { font-size: 11px; }
 .ed-item__icon { width: 20px; height: 20px; flex: 0 0 auto; stroke-width: 1.5; }
 .page--light .ed-item__icon { color: var(--mor-soft); }
 .page--deep  .ed-item__icon { color: var(--mor-light); }
@@ -527,6 +564,13 @@ body.view-3up #menu .page { zoom: 0.42; }
 }
 .page--light .ed-item__desc { color: var(--text-muted); }
 .page--deep  .ed-item__desc { color: var(--cream-muted); }
+
+/* İngilizce açıklama — Türkçenin altında, italik & daha soluk */
+.ed-item__desc--en {
+  font-style: italic;
+  opacity: 0.78;
+  margin-top: 2px;
+}
 
 /* footer etiketi */
 .ed-footer {

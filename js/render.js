@@ -52,7 +52,7 @@
     "Kırmızı": "Red",
     "Beyaz": "White",
     "Blush": "Blush",
-    "Aperatifler": "Aperitifs",
+    "Aperitifler": "Aperitifs",
   };
   const subEnFor = (t) => SUB_EN[t] || "";
 
@@ -116,13 +116,22 @@
      ============================================================ */
   function MenuIntroPage() {
     const n = D.brand.intro;
+    const headingEn = n.headingEn
+      ? `<p class="intro__heading-en" lang="en">${n.headingEn}</p>` : "";
+    const verseEn = n.verseEn
+      ? `<p class="intro__verse intro__verse-en" lang="en">${n.verseEn.join("<br>")}</p>` : "";
+    const bodyEn = n.bodyEn
+      ? `<p class="intro__body intro__body-en" lang="en">${n.bodyEn}</p>` : "";
     // Arka plan: kapak-gorseli.png (CSS .intro--image), karşılama yazıları üstte
     return el(`
       <section class="page intro intro--photo">
         <div class="content intro__overlay">
           <h2 class="intro__heading">${n.heading}</h2>
+          ${headingEn}
           <p class="intro__verse">${n.verse.join("<br>")}</p>
+          ${verseEn}
           <p class="intro__body">${n.body}</p>
+          ${bodyEn}
           <span class="intro__dot"></span>
         </div>
       </section>`);
@@ -133,12 +142,21 @@
      ============================================================ */
   function MenuOutroPage() {
     const n = D.brand.outro;
+    const headingEn = n.headingEn
+      ? `<p class="intro__heading-en" lang="en">${n.headingEn}</p>` : "";
+    const verseEn = n.verseEn
+      ? `<p class="intro__verse intro__verse-en" lang="en">${n.verseEn.join("<br>")}</p>` : "";
+    const bodyEn = n.bodyEn
+      ? `<p class="intro__body intro__body-en" lang="en">${n.bodyEn}</p>` : "";
     return el(`
       <section class="page intro intro--photo">
         <div class="content intro__overlay">
           <h2 class="intro__heading">${n.heading}</h2>
+          ${headingEn}
           <p class="intro__verse">${n.verse.join("<br>")}</p>
+          ${verseEn}
           <p class="intro__body">${n.body}</p>
+          ${bodyEn}
           <span class="intro__dot"></span>
         </div>
       </section>`);
@@ -227,16 +245,28 @@
     const desc = item.description
       ? `<p class="ed-item__desc">${item.description}</p>`
       : "";
+    // İngilizce açıklama — Türkçenin altında, italik & soluk
+    const descEn = item.descEn
+      ? `<p class="ed-item__desc ed-item__desc--en" lang="en">${item.descEn}</p>`
+      : "";
+    // İngilizce ad — Türkçe adın altında, küçük italik
+    const nameEn = item.nameEn
+      ? `<span class="ed-item__name-en" lang="en">${item.nameEn}</span>`
+      : "";
     // İngilizce kelimelerde büyük "I" (noktasız), Türkçe adlarda lang:"tr" → "İ"
     const nameLang = item.lang || "en";
     return `
       <div class="ed-item">
         <div class="ed-item__row">
-          <span class="ed-item__name" lang="${nameLang}">${item.name}</span>
+          <span class="ed-item__name">
+            <span class="ed-item__name-tr" lang="${nameLang}">${item.name}</span>
+            ${nameEn}
+          </span>
           <span class="ed-item__lead"></span>
           ${price}
         </div>
         ${desc}
+        ${descEn}
       </div>`;
   }
 
